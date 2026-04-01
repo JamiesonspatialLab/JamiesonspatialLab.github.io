@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jamieson Spatial Lab — University of Glasgow</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --ink: #1a1a18;
+      --ink-muted: #5a5a55;
+      --ink-faint: #9a9a93;
+      --rule: #d8d5cc;
+      --surface: #f9f8f5;
+      --white: #ffffff;
+      --accent: #003865;
+      --accent-mid: #1a5276;
+      --accent-light: #e3eaf2;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; font-weight: 300; color: var(--ink); background: var(--white); font-size: 16px; line-height: 1.7; }
+
+    /* NAV */
+    nav { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.94); backdrop-filter: blur(8px); border-bottom: 1px solid var(--rule); padding: 0 2.5rem; display: flex; align-items: center; justify-content: space-between; height: 60px; }
+    .nav-brand { font-family: 'EB Garamond', serif; font-size: 1.1rem; color: var(--ink); text-decoration: none; letter-spacing: 0.01em; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { font-size: 0.82rem; font-weight: 400; text-decoration: none; color: var(--ink-muted); letter-spacing: 0.06em; text-transform: uppercase; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--accent); }
+
+    /* HERO */
+    .hero { padding: 7rem 2.5rem 5rem; max-width: 860px; margin: 0 auto; }
+    .hero-label { font-size: 0.78rem; font-weight: 400; letter-spacing: 0.07em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 1.5rem; line-height: 1.9; }
+    .hero h1 { font-family: 'EB Garamond', serif; font-size: clamp(2.4rem, 5vw, 3.6rem); font-weight: 400; line-height: 1.18; color: var(--ink); margin-bottom: 1.8rem; letter-spacing: -0.01em; }
+    .hero h1 em { font-style: italic; color: var(--accent); }
+    .hero-desc { font-size: 1.05rem; font-weight: 300; color: var(--ink-muted); max-width: 600px; margin-bottom: 2.5rem; line-height: 1.8; }
+    .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+    .btn-primary { display: inline-flex; align-items: center; gap: 0.4em; background: var(--accent); color: #fff; text-decoration: none; padding: 0.65rem 1.4rem; font-size: 0.85rem; font-weight: 400; letter-spacing: 0.04em; border-radius: 2px; transition: background 0.2s; }
+    .btn-primary:hover { background: var(--accent-mid); }
+    .btn-secondary { display: inline-flex; align-items: center; gap: 0.4em; border: 1px solid var(--rule); color: var(--ink-muted); text-decoration: none; padding: 0.65rem 1.4rem; font-size: 0.85rem; font-weight: 400; letter-spacing: 0.04em; border-radius: 2px; transition: border-color 0.2s, color 0.2s; }
+    .btn-secondary:hover { border-color: var(--ink-muted); color: var(--ink); }
+
+    /* LAYOUT */
+    .divider { max-width: 860px; margin: 0 auto; border: none; border-top: 1px solid var(--rule); }
+    section { padding: 5rem 2.5rem; max-width: 860px; margin: 0 auto; }
+    .section-label { font-size: 0.75rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 0.6rem; }
+    .section-title { font-family: 'EB Garamond', serif; font-size: clamp(1.6rem, 3vw, 2.1rem); font-weight: 400; color: var(--ink); margin-bottom: 2rem; line-height: 1.25; }
+
+    /* ABOUT */
+    .about-body { font-size: 1rem; font-weight: 300; color: var(--ink-muted); line-height: 1.85; max-width: 680px; margin-bottom: 1.4rem; }
+
+    /* TECHNOLOGIES */
+    .tech-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2.5rem; }
+    .tech-card { border: 1px solid var(--rule); border-radius: 2px; padding: 1.6rem 1.8rem; }
+    .tech-card-label { font-size: 0.72rem; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
+    .tech-list { list-style: none; display: flex; flex-direction: column; gap: 0.55rem; }
+    .tech-list li { font-size: 0.95rem; font-weight: 300; color: var(--ink-muted); display: flex; align-items: center; gap: 0.6rem; }
+    .tech-list li::before { content: ''; display: inline-block; width: 4px; height: 4px; border-radius: 50%; background: var(--accent); flex-shrink: 0; opacity: 0.5; }
+
+    /* TISSUE ACCESS */
+    .tissue-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 0; }
+    .tissue-card { background: var(--surface); border: 1px solid var(--rule); border-radius: 2px; padding: 1.6rem 1.8rem; text-decoration: none; transition: border-color 0.2s; display: block; }
+    .tissue-card:hover { border-color: var(--accent); }
+    .tissue-card-label { font-size: 0.7rem; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 0.5rem; }
+    .tissue-card-name { font-family: 'EB Garamond', serif; font-size: 1.15rem; color: var(--ink); margin-bottom: 0.4rem; }
+    .tissue-card-desc { font-size: 0.85rem; font-weight: 300; color: var(--ink-muted); line-height: 1.6; }
+    .tissue-card-link { font-size: 0.78rem; color: var(--accent); margin-top: 0.8rem; display: inline-block; letter-spacing: 0.03em; }
+
+    /* TEAM */
+    .team-section-intro { font-size: 0.95rem; font-weight: 300; color: var(--ink-muted); margin-bottom: 2.5rem; max-width: 560px; line-height: 1.7; }
+    .team-group-label { font-size: 0.72rem; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 1.2rem; padding-bottom: 0.6rem; border-bottom: 1px solid var(--rule); }
+    .team-block { margin-bottom: 2.5rem; }
+    .team-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 1.8rem; }
+    .team-card { text-align: left; }
+    .avatar { width: 56px; height: 56px; border-radius: 50%; background: var(--accent-light); display: flex; align-items: center; justify-content: center; font-family: 'EB Garamond', serif; font-size: 1.1rem; color: var(--accent); margin-bottom: 0.8rem; flex-shrink: 0; }
+    .avatar.pi { width: 72px; height: 72px; font-size: 1.4rem; background: var(--accent); color: #fff; }
+    .team-name { font-weight: 400; font-size: 0.95rem; color: var(--ink); margin-bottom: 0.15rem; }
+    .team-role { font-size: 0.82rem; color: var(--ink-faint); line-height: 1.4; }
+
+    /* CONTACT */
+    .contact-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+    .contact-text { font-size: 0.97rem; font-weight: 300; color: var(--ink-muted); line-height: 1.8; margin-bottom: 1.8rem; }
+    .contact-detail { display: flex; align-items: flex-start; gap: 0.8rem; margin-bottom: 1.1rem; }
+    .contact-detail-label { font-size: 0.72rem; letter-spacing: 0.09em; text-transform: uppercase; color: var(--ink-faint); min-width: 68px; padding-top: 0.2rem; }
+    .contact-detail-val { font-size: 0.92rem; color: var(--ink-muted); line-height: 1.6; }
+    .contact-detail-val a { color: var(--accent); text-decoration: none; }
+    .contact-detail-val a:hover { text-decoration: underline; }
+    .join-box { background: var(--surface); border: 1px solid var(--rule); padding: 2rem; border-radius: 2px; }
+    .join-box h3 { font-family: 'EB Garamond', serif; font-size: 1.3rem; font-weight: 400; color: var(--ink); margin-bottom: 0.7rem; }
+    .join-box p { font-size: 0.9rem; font-weight: 300; color: var(--ink-muted); line-height: 1.7; margin-bottom: 1.2rem; }
+
+    /* FOOTER */
+    footer { border-top: 1px solid var(--rule); padding: 2.5rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; max-width: 860px; margin: 0 auto; }
+    .footer-brand { font-family: 'EB Garamond', serif; font-size: 0.92rem; color: var(--ink-faint); line-height: 1.7; }
+    .footer-links { display: flex; gap: 1.5rem; list-style: none; }
+    .footer-links a { font-size: 0.8rem; color: var(--ink-faint); text-decoration: none; letter-spacing: 0.04em; }
+    .footer-links a:hover { color: var(--accent); }
+
+    @media (max-width: 640px) {
+      nav { padding: 0 1.2rem; }
+      .nav-links { gap: 1rem; }
+      .nav-links a { font-size: 0.75rem; }
+      .hero, section { padding-left: 1.2rem; padding-right: 1.2rem; }
+      .tech-grid, .tissue-row, .contact-layout { grid-template-columns: 1fr; }
+      footer { padding: 2rem 1.2rem; flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a class="nav-brand" href="#">Jamieson Spatial Lab</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#technologies">Technologies</a></li>
+      <li><a href="#team">Team</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <p class="hero-label">School of Cancer Sciences &nbsp;&middot;&nbsp; College of Medical, Veterinary and Life Sciences &nbsp;&middot;&nbsp; University of Glasgow</p>
+    <h1>Mapping tissue in<br><em>space and disease</em></h1>
+    <p class="hero-desc">
+      The Jamieson Spatial Lab uses cutting-edge spatial multi-omics and multiplexed imaging to understand how cells are organised within tissues — and how that organisation breaks down in disease. We work across cancer, inflammation, and beyond.
+    </p>
+    <div class="hero-ctas">
+      <a href="#technologies" class="btn-primary">Our platforms &rarr;</a>
+      <a href="https://github.com/YOUR-ORG" class="btn-secondary">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+        GitHub
+      </a>
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- ABOUT -->
+  <section id="about">
+    <p class="section-label">About the lab</p>
+    <h2 class="section-title">Who we are</h2>
+    <p class="about-body">
+      The Jamieson Spatial Lab is part of the School of Cancer Sciences within the College of Medical, Veterinary and Life Sciences at the University of Glasgow. Led by Professor Nigel Jamieson, we are a multidisciplinary team applying spatial biology to understand the role of tissue architecture in health and disease.
+    </p>
+    <p class="about-body">
+      We combine spatial transcriptomics, spatial proteomics, and multiplexed tissue imaging to study how different cell types are organised within tissues — and how disruption of that organisation underpins a wide range of diseases, from cancer to chronic inflammation. By mapping cells in their native spatial context, we uncover biological insights that are simply invisible to conventional approaches.
+    </p>
+    <p class="about-body">
+      We are committed to open, reproducible science and work in close partnership with clinical colleagues across NHS Greater Glasgow and Clyde. Our access to world-class spatial platforms and linked biorepositories makes us uniquely placed to translate spatial biology into clinically meaningful discovery.
+    </p>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- TECHNOLOGIES -->
+  <section id="technologies">
+    <p class="section-label">Platforms</p>
+    <h2 class="section-title">Our technologies</h2>
+
+    <div class="tech-grid">
+
+      <div class="tech-card">
+        <p class="tech-card-label">Spatial Transcriptomics</p>
+        <ul class="tech-list">
+          <li>CosMx (×3 instruments)</li>
+          <li>STOmics Stereo-seq</li>
+          <li>10x Genomics Visium HD</li>
+          <li>Stellaromics Pyxa</li>
+        </ul>
+      </div>
+
+      <div class="tech-card">
+        <p class="tech-card-label">Spatial Proteomics</p>
+        <ul class="tech-list">
+          <li>Lunaphore COMET</li>
+          <li>Bruker CellScape</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <p class="section-label" style="margin-bottom: 1rem; margin-top: 0.5rem;">Tissue access</p>
+    <div class="tissue-row">
+
+      <a class="tissue-card" href="https://www.gla.ac.uk/research/az/gtrf/" target="_blank" rel="noopener">
+        <p class="tissue-card-label">Partner facility</p>
+        <p class="tissue-card-name">Glasgow Tissue Research Facility</p>
+        <p class="tissue-card-desc">GTRF provides access to ethically consented human tissue and expert histopathology support, enabling translational spatial research from sample to discovery.</p>
+        <span class="tissue-card-link">Visit GTRF &rarr;</span>
+      </a>
+
+      <a class="tissue-card" href="https://www.nhsggc.scot/patients-and-visitors/research-and-innovation/biorepository/" target="_blank" rel="noopener">
+        <p class="tissue-card-label">Partner facility</p>
+        <p class="tissue-card-name">NHS Greater Glasgow &amp; Clyde Biorepository</p>
+        <p class="tissue-card-desc">The NHSGGC Biorepository links clinical samples with patient data, providing a rich resource for spatially resolving disease mechanisms across large cohorts.</p>
+        <span class="tissue-card-link">Visit Biorepository &rarr;</span>
+      </a>
+
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- TEAM -->
+  <section id="team">
+    <p class="section-label">People</p>
+    <h2 class="section-title">The team</h2>
+    <p class="team-section-intro">We are a collaborative, interdisciplinary group. If you think you might be missing from this list, you almost certainly are — get in touch!</p>
+
+    <!-- PI -->
+    <div class="team-block">
+      <p class="team-group-label">Principal Investigator</p>
+      <div class="team-card">
+        <div class="avatar pi">NJ</div>
+        <p class="team-name">Professor Nigel Jamieson</p>
+        <p class="team-role">PI &amp; Lab Lead<br>School of Cancer Sciences, University of Glasgow</p>
+      </div>
+    </div>
+
+    <!-- Postdocs -->
+    <div class="team-block">
+      <p class="team-group-label">Postdoctoral Researchers</p>
+      <div class="team-grid">
+        <div class="team-card">
+          <div class="avatar">AL</div>
+          <p class="team-name">Dr Assya Legrini</p>
+          <p class="team-role">Postdoctoral Researcher</p>
+        </div>
+        <div class="team-card">
+          <div class="avatar">CW</div>
+          <p class="team-name">Mr Colin Wood</p>
+          <p class="team-role">Clinical Postdoctoral Researcher</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Technicians -->
+    <div class="team-block">
+      <p class="team-group-label">Research Technicians</p>
+      <div class="team-grid">
+        <div class="team-card">
+          <div class="avatar">CK</div>
+          <p class="team-name">Claire Kennedy Dietrich</p>
+          <p class="team-role">Research Technician</p>
+        </div>
+        <div class="team-card">
+          <div class="avatar">YD</div>
+          <p class="team-name">Yoana Doncheva</p>
+          <p class="team-role">Research Technician</p>
+        </div>
+        <div class="team-card">
+          <div class="avatar">GL</div>
+          <p class="team-name">Ghazal Latifi</p>
+          <p class="team-role">Research Technician</p>
+        </div>
+        <div class="team-card">
+          <div class="avatar">JM</div>
+          <p class="team-name">Josefina Martinez Vasquez</p>
+          <p class="team-role">Research Technician</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- PhD Students -->
+    <div class="team-block">
+      <p class="team-group-label">PhD Students</p>
+      <div class="team-grid">
+        <div class="team-card">
+          <div class="avatar">TZ</div>
+          <p class="team-name">Tengyu Zhang</p>
+          <p class="team-role">PhD Student</p>
+        </div>
+        <div class="team-card">
+          <div class="avatar">MM</div>
+          <p class="team-name">Mairi-Claire McGuigan</p>
+          <p class="team-role">PhD Student</p>
+        </div>
+        <div class="team-card">
+          <div class="avatar">LM</div>
+          <p class="team-name">Luke McNickle</p>
+          <p class="team-role">PhD Student</p>
+        </div>
+        <div class="team-card">
+          <div class="avatar">AG</div>
+          <p class="team-name">Andrea Gonzalez Ciscar</p>
+          <p class="team-role">PhD Student</p>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <hr class="divider" />
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <p class="section-label">Contact</p>
+    <h2 class="section-title">Get in touch</h2>
+    <div class="contact-layout">
+      <div>
+        <p class="contact-text">
+          We welcome enquiries from prospective PhD students, postdoctoral researchers, and potential collaborators interested in spatial biology and tissue science.
+        </p>
+        <div class="contact-detail">
+          <span class="contact-detail-label">Email</span>
+          <span class="contact-detail-val">
+            <a href="mailto:mvls-jamieson-lab@glasgow.ac.uk">mvls-jamieson-lab@glasgow.ac.uk</a>
+          </span>
+        </div>
+        <div class="contact-detail">
+          <span class="contact-detail-label">Address</span>
+          <span class="contact-detail-val">
+            Level 2, Wolfson Wohl Cancer Research Centre<br>
+            Bearsden, Glasgow, G61 1BD<br>
+            United Kingdom
+          </span>
+        </div>
+        <div class="contact-detail">
+          <span class="contact-detail-label">GitHub</span>
+          <span class="contact-detail-val">
+            <a href="https://github.com/YOUR-ORG" target="_blank" rel="noopener">github.com/YOUR-ORG</a>
+          </span>
+        </div>
+      </div>
+      <div class="join-box">
+        <h3>Join the lab</h3>
+        <p>We are always interested in hearing from scientists who want to work at the cutting edge of spatial biology and tissue research.</p>
+        <p>PhD opportunities may be available through the University of Glasgow's doctoral training programmes. Postdoctoral candidates are encouraged to explore CRUK, Wellcome, and Marie Curie fellowship routes.</p>
+        <a href="mailto:mvls-jamieson-lab@glasgow.ac.uk?subject=Lab%20enquiry" class="btn-primary">Get in touch &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <footer>
+    <span class="footer-brand">
+      Jamieson Spatial Lab &nbsp;&middot;&nbsp; School of Cancer Sciences<br>
+      College of Medical, Veterinary and Life Sciences &nbsp;&middot;&nbsp; University of Glasgow
+    </span>
+    <ul class="footer-links">
+      <li><a href="https://github.com/YOUR-ORG" target="_blank" rel="noopener">GitHub</a></li>
+      <li><a href="https://www.gla.ac.uk/schools/cancersciences/" target="_blank" rel="noopener">School of Cancer Sciences</a></li>
+      <li><a href="mailto:mvls-jamieson-lab@glasgow.ac.uk">Email us</a></li>
+    </ul>
+  </footer>
+
+</body>
+</html>
