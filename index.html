@@ -30,8 +30,34 @@
     .nav-links a { font-size: 0.82rem; font-weight: 400; text-decoration: none; color: var(--ink-muted); letter-spacing: 0.06em; text-transform: uppercase; transition: color 0.2s; }
     .nav-links a:hover { color: var(--accent); }
 
-    /* HERO */
-    .hero { padding: 7rem 2.5rem 5rem; max-width: 860px; margin: 0 auto; }
+    /* BANNER IMAGE */
+    .hero-banner {
+      width: 100%;
+      height: 420px;
+      overflow: hidden;
+      display: block;
+    }
+    .hero-banner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+    .hero-banner-caption {
+      text-align: right;
+      font-size: 0.7rem;
+      color: var(--ink-faint);
+      letter-spacing: 0.04em;
+      padding: 0.4rem 1.5rem 0;
+    }
+
+    /* HERO TEXT */
+    .hero {
+      padding: 4rem 2.5rem 5rem;
+      max-width: 860px;
+      margin: 0 auto;
+    }
     .hero-label { font-size: 0.78rem; font-weight: 400; letter-spacing: 0.07em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 1.5rem; line-height: 1.9; }
     .hero h1 { font-family: 'EB Garamond', serif; font-size: clamp(2.4rem, 5vw, 3.6rem); font-weight: 400; line-height: 1.18; color: var(--ink); margin-bottom: 1.8rem; letter-spacing: -0.01em; }
     .hero h1 em { font-style: italic; color: var(--accent); }
@@ -61,7 +87,7 @@
     .tech-list li::before { content: ''; display: inline-block; width: 4px; height: 4px; border-radius: 50%; background: var(--accent); flex-shrink: 0; opacity: 0.5; }
 
     /* TISSUE ACCESS */
-    .tissue-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 0; }
+    .tissue-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
     .tissue-card { background: var(--surface); border: 1px solid var(--rule); border-radius: 2px; padding: 1.6rem 1.8rem; text-decoration: none; transition: border-color 0.2s; display: block; }
     .tissue-card:hover { border-color: var(--accent); }
     .tissue-card-label { font-size: 0.7rem; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 0.5rem; }
@@ -99,8 +125,10 @@
     .footer-links a { font-size: 0.8rem; color: var(--ink-faint); text-decoration: none; letter-spacing: 0.04em; }
     .footer-links a:hover { color: var(--accent); }
 
-    @media (max-width: 640px) {
+    @media (max-width: 700px) {
+      .hero-banner { height: 240px; }
       nav { padding: 0 1.2rem; }
+      .nav-brand { font-size: 0.95rem; }
       .nav-links { gap: 1rem; }
       .nav-links a { font-size: 0.75rem; }
       .hero, section { padding-left: 1.2rem; padding-right: 1.2rem; }
@@ -122,7 +150,13 @@
     </ul>
   </nav>
 
-  <!-- HERO -->
+  <!-- FULL WIDTH BANNER -->
+  <div class="hero-banner">
+    <img src="CellComposite_F00001.jpg" alt="Spatial cell composite image — Jamieson Spatial Lab" />
+  </div>
+  <p class="hero-banner-caption">Spatial cell composite &nbsp;&middot;&nbsp; Jamieson Spatial Lab</p>
+
+  <!-- HERO TEXT -->
   <div class="hero">
     <p class="hero-label">School of Cancer Sciences &nbsp;&middot;&nbsp; College of Medical, Veterinary and Life Sciences &nbsp;&middot;&nbsp; University of Glasgow</p>
     <h1>Mapping tissue in<br><em>space and disease</em></h1>
@@ -131,7 +165,7 @@
     </p>
     <div class="hero-ctas">
       <a href="#technologies" class="btn-primary">Our platforms &rarr;</a>
-      <a href="https://github.com/YOUR-ORG" class="btn-secondary">
+      <a href="https://github.com/JamiesonspatialLab" class="btn-secondary">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
         GitHub
       </a>
@@ -163,7 +197,6 @@
     <h2 class="section-title">Our technologies</h2>
 
     <div class="tech-grid">
-
       <div class="tech-card">
         <p class="tech-card-label">Spatial Transcriptomics</p>
         <ul class="tech-list">
@@ -173,7 +206,6 @@
           <li>Stellaromics Pyxa</li>
         </ul>
       </div>
-
       <div class="tech-card">
         <p class="tech-card-label">Spatial Proteomics</p>
         <ul class="tech-list">
@@ -181,26 +213,22 @@
           <li>Bruker CellScape</li>
         </ul>
       </div>
-
     </div>
 
     <p class="section-label" style="margin-bottom: 1rem; margin-top: 0.5rem;">Tissue access</p>
     <div class="tissue-row">
-
       <a class="tissue-card" href="https://www.gla.ac.uk/research/az/gtrf/" target="_blank" rel="noopener">
         <p class="tissue-card-label">Partner facility</p>
         <p class="tissue-card-name">Glasgow Tissue Research Facility</p>
         <p class="tissue-card-desc">GTRF provides access to ethically consented human tissue and expert histopathology support, enabling translational spatial research from sample to discovery.</p>
         <span class="tissue-card-link">Visit GTRF &rarr;</span>
       </a>
-
       <a class="tissue-card" href="https://www.nhsggc.scot/patients-and-visitors/research-and-innovation/biorepository/" target="_blank" rel="noopener">
         <p class="tissue-card-label">Partner facility</p>
         <p class="tissue-card-name">NHS Greater Glasgow &amp; Clyde Biorepository</p>
         <p class="tissue-card-desc">The NHSGGC Biorepository links clinical samples with patient data, providing a rich resource for spatially resolving disease mechanisms across large cohorts.</p>
         <span class="tissue-card-link">Visit Biorepository &rarr;</span>
       </a>
-
     </div>
   </section>
 
@@ -212,7 +240,6 @@
     <h2 class="section-title">The team</h2>
     <p class="team-section-intro">We are a collaborative, interdisciplinary group. If you think you might be missing from this list, you almost certainly are — get in touch!</p>
 
-    <!-- PI -->
     <div class="team-block">
       <p class="team-group-label">Principal Investigator</p>
       <div class="team-card">
@@ -222,7 +249,6 @@
       </div>
     </div>
 
-    <!-- Postdocs -->
     <div class="team-block">
       <p class="team-group-label">Postdoctoral Researchers</p>
       <div class="team-grid">
@@ -239,7 +265,6 @@
       </div>
     </div>
 
-    <!-- Technicians -->
     <div class="team-block">
       <p class="team-group-label">Research Technicians</p>
       <div class="team-grid">
@@ -266,7 +291,6 @@
       </div>
     </div>
 
-    <!-- PhD Students -->
     <div class="team-block">
       <p class="team-group-label">PhD Students</p>
       <div class="team-grid">
@@ -292,7 +316,6 @@
         </div>
       </div>
     </div>
-
   </section>
 
   <hr class="divider" />
@@ -323,7 +346,7 @@
         <div class="contact-detail">
           <span class="contact-detail-label">GitHub</span>
           <span class="contact-detail-val">
-            <a href="https://github.com/YOUR-ORG" target="_blank" rel="noopener">github.com/YOUR-ORG</a>
+            <a href="https://github.com/JamiesonspatialLab" target="_blank" rel="noopener">github.com/JamiesonspatialLab</a>
           </span>
         </div>
       </div>
